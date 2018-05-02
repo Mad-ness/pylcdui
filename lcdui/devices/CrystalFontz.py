@@ -370,3 +370,50 @@ class CFA635Display(Generic.SerialCharacterDisplay):
     self.ClearScreen()
     self.EnableBacklight(True)
     self.SetCursor(0, 0)
+
+class CFA633Display(CFA635Display):
+
+  def __init__(self, port, baudrate=19200):
+    Generic.SerialCharacterDisplay.__init__(self, port, baudrate)
+    self._logger = logging.getLogger('cfa-633')
+    self._backlight_amt = 0
+    self._out_packets = Queue.Queue()
+
+  def _ReadPacket(self):
+    command, data_length = struct.unpack('BB', self._serial_handle.read(2))
+    command_type = command >> 6
+    command_value = command & 0x3f
+
+    if data_length > 18:
+      self._logger.error('Invalid data length: %i' % data_length)
+      return
+
+    self._logger.debug('Response: %x %x %x' % (command_type, command_value, data_length))
+    bytes = self._serial_handle.read(data_length)
+    crc = self._serial_handle.read(2)
+
+    return bytes
+
+  def _HandleIncomingPacket(self, packet):
+    decoded = KeyActivityPacket().Activity(int(packet.encode('hex'), 16))
+    self._logger.debug('Got packet: %s' % str(decoded))
+    return decoded
+
+  def _DrainPackets(self):
+    timeout = 0.250
+    packets = []
+    while True:
+      res = self._WaitForPacket(timeout=timeout)
+      if not res:
+        break
+      packets.append(self._HandleIncomingPacket(res))
+      timeout = 0
+    return packets
+
+  ### IGenericDisplay interface
+
+  def rows(self):
+    return 2
+
+  def cols(self):
+    return 16
