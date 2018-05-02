@@ -108,6 +108,7 @@ class LcdUi:
       current_frame = self.CurrentFrame()
       if current_frame:
         current_frame.HandleKeyEvent(event)
+      self.HandleKeyEvent(event)
 
   def _CheckActivity(self):
     now = datetime.datetime.now()
