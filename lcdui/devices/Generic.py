@@ -1,7 +1,7 @@
 try:
   import serial
   HAVE_SERIAL = True
-except ImporError:
+except ImportError:
   HAVE_SERIAL = False
 
 from lcdui import common
