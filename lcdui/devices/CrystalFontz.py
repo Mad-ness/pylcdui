@@ -417,3 +417,8 @@ class CFA633Display(CFA635Display):
 
   def cols(self):
     return 16
+
+class CFA533Display(CFA633Display):
+    pass
+
+

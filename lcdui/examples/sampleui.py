@@ -5,7 +5,10 @@ from lcdui.ui import widget
 import time
 
 #device = Generic.MockCharacterDisplay(rows=4, cols=40)
-device = CrystalFontz.CFA635Display(port='/dev/ttyUSB0')
+#device = CrystalFontz.CFA635Display(port='/dev/ttyUSB0')
+
+device = CrystalFontz.CFA533Display(port='/dev/ttyUSB0')
+
 
 device.ClearScreen()
 device.BacklightEnable(True)
@@ -17,7 +20,7 @@ f = ui.FrameFactory(frame.Frame)
 line1 = f.BuildWidget(widget.LineWidget, row=0, col=0)
 line1.set_contents("Hello, world!")
 
-line2 = f.BuildWidget(widget.LineWidget, row=3, col=10, span=6)
+line2 = f.BuildWidget(widget.LineWidget, row=1, col=10, span=6)
 line2.set_contents("cutoffXXX")
 
 ui.PushFrame(f)
@@ -61,3 +64,5 @@ ui.PushFrame(f)
 for i in xrange(15):
   ui.Repaint()
   time.sleep(1)
+
+

@@ -1,0 +1,4 @@
+pylcdui.egg*
+build/
+**/*.swp
+
