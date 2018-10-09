@@ -62,7 +62,7 @@ class Frame(object):
       outstr = w.Paint()
       row, col = self._position[name]
       span = self._span[name]
-      print( "Print {outstr} @ r{row}c{col}#{span}".format( outstr=outstr, col=col, row=row, span=span ))
+      # print( "Print {outstr} @ r{row}c{col}#{span}".format( outstr=outstr, col=col, row=row, span=span ))
       self._screen_buffer.Write(array.array('c', outstr), row, col, span)
     return self._screen_buffer
 
@@ -272,7 +272,6 @@ class ScreenBuffer:
 
    def Write(self, data, row, col, span):
       """ replace data at row, col in this matrix """
-      # print( "RequestedRow={row} (of {total_rows}), RequestedCol={col} (of {total_cols})".format(row=row, col=col, total_rows=self._rows, total_cols=self._cols))
       assert row in range(self._rows)
       assert col in range(self._cols)
 

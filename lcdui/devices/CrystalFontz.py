@@ -214,7 +214,7 @@ class ConfigKeypadPacket(CFA635Packet):
 
 class ReadKeypadPacket(CFA635Packet):
   TYPE = 24
-  FORMAT = (  ) #XXX todo request/reply differences
+  FORMAT = ( ) #XXX todo request/reply differences
 
 
 # cmd 25 set fan power fail state
@@ -314,6 +314,7 @@ class CFA635Display(Generic.SerialCharacterDisplay):
 
   def _HandleIncomingPacket(self, packet):
     self._logger.debug('Got packet: %s' % packet)
+    print('Got packet: %s' % packet)
 
   def _ReadPacket(self):
     command, data_length = struct.unpack('BB', self._serial_handle.read(2))

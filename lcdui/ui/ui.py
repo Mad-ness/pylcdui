@@ -102,7 +102,9 @@ class LcdUi:
     while True:
       try:
         event = self._key_events.get_nowait()
-      except Queue.Empty:
+        print("Key event happend: ", event)
+      except Exception as e:
+        print("No key events ",e)
         return
 
       current_frame = self.CurrentFrame()
